@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 480" width="740" height="480" font-family="monospace, sans-serif">
+
+  <!-- Background -->
+  <rect width="740" height="480" fill="#f8f9fa" rx="8"/>
+
+  <!-- Title -->
+  <text x="370" y="36" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a1a2e">Job Vault — Entity Relationship Diagram</text>
+
+  <!-- ===== companies table ===== -->
+  <g id="companies">
+    <!-- Header -->
+    <rect x="60" y="70" width="240" height="36" fill="#4a6fa5" rx="6 6 0 0"/>
+    <text x="180" y="93" text-anchor="middle" font-size="14" font-weight="bold" fill="#ffffff">companies</text>
+
+    <!-- Body -->
+    <rect x="60" y="106" width="240" height="252" fill="#ffffff" stroke="#4a6fa5" stroke-width="1.5" rx="0 0 6 6"/>
+
+    <!-- Rows -->
+    <!-- PK row -->
+    <rect x="60" y="106" width="240" height="30" fill="#eef2f7"/>
+    <text x="80" y="126" font-size="12" fill="#888">PK</text>
+    <text x="110" y="126" font-size="12" font-weight="bold" fill="#1a1a2e">id</text>
+    <text x="240" y="126" font-size="11" fill="#666">integer</text>
+
+    <line x1="60" y1="136" x2="300" y2="136" stroke="#d0d7e3" stroke-width="1"/>
+    <text x="80" y="154" font-size="12" fill="#1a1a2e">name</text>
+    <text x="240" y="154" font-size="11" fill="#666">string</text>
+
+    <line x1="60" y1="162" x2="300" y2="162" stroke="#d0d7e3" stroke-width="1"/>
+    <text x="80" y="180" font-size="12" fill="#1a1a2e">contact_name</text>
+    <text x="240" y="180" font-size="11" fill="#666">string</text>
+
+    <line x1="60" y1="188" x2="300" y2="188" stroke="#d0d7e3" stroke-width="1"/>
+    <text x="80" y="206" font-size="12" fill="#1a1a2e">url</text>
+    <text x="240" y="206" font-size="11" fill="#666">string</text>
+
+    <line x1="60" y1="214" x2="300" y2="214" stroke="#d0d7e3" stroke-width="1"/>
+    <text x="80" y="232" font-size="12" fill="#1a1a2e">notes</text>
+    <text x="240" y="232" font-size="11" fill="#666">text</text>
+
+    <line x1="60" y1="240" x2="300" y2="240" stroke="#d0d7e3" stroke-width="1"/>
+    <text x="80" y="258" font-size="12" fill="#1a1a2e">star_rating</text>
+    <text x="240" y="258" font-size="11" fill="#666">integer</text>
+
+    <line x1="60" y1="266" x2="300" y2="266" stroke="#d0d7e3" stroke-width="1"/>
+    <text x="80" y="284" font-size="12" fill="#aaa">created_at</text>
+    <text x="240" y="284" font-size="11" fill="#aaa">datetime</text>
+
+    <line x1="60" y1="292" x2="300" y2="292" stroke="#d0d7e3" stroke-width="1"/>
+    <text x="80" y="310" font-size="12" fill="#aaa">updated_at</text>
+    <text x="240" y="310" font-size="11" fill="#aaa">datetime</text>
+
+    <line x1="60" y1="318" x2="300" y2="318" stroke="#d0d7e3" stroke-width="1"/>
+    <!-- Constraint note -->
+    <text x="80" y="346" font-size="10" fill="#888" font-style="italic">star_rating: 0–5</text>
+  </g>
+
+  <!-- ===== calendar_events table ===== -->
+  <g id="calendar_events">
+    <!-- Header -->
+    <rect x="440" y="70" width="240" height="36" fill="#e07b54" rx="6 6 0 0"/>
+    <text x="560" y="93" text-anchor="middle" font-size="14" font-weight="bold" fill="#ffffff">calendar_events</text>
+
+    <!-- Body -->
+    <rect x="440" y="106" width="240" height="312" fill="#ffffff" stroke="#e07b54" stroke-width="1.5" rx="0 0 6 6"/>
+
+    <!-- PK row -->
+    <rect x="440" y="106" width="240" height="30" fill="#fdf3ef"/>
+    <text x="460" y="126" font-size="12" fill="#888">PK</text>
+    <text x="490" y="126" font-size="12" font-weight="bold" fill="#1a1a2e">id</text>
+    <text x="620" y="126" font-size="11" fill="#666">integer</text>
+
+    <line x1="440" y1="136" x2="680" y2="136" stroke="#f0d5c8" stroke-width="1"/>
+    <!-- FK row -->
+    <rect x="440" y="136" width="240" height="30" fill="#fff8f5"/>
+    <text x="460" y="156" font-size="12" fill="#888">FK</text>
+    <text x="490" y="156" font-size="12" font-weight="bold" fill="#1a1a2e">company_id</text>
+    <text x="620" y="156" font-size="11" fill="#666">integer</text>
+
+    <line x1="440" y1="166" x2="680" y2="166" stroke="#f0d5c8" stroke-width="1"/>
+    <text x="460" y="184" font-size="12" fill="#1a1a2e">title</text>
+    <text x="620" y="184" font-size="11" fill="#666">string</text>
+
+    <line x1="440" y1="192" x2="680" y2="192" stroke="#f0d5c8" stroke-width="1"/>
+    <text x="460" y="210" font-size="12" fill="#1a1a2e">event_type</text>
+    <text x="620" y="210" font-size="11" fill="#666">string</text>
+
+    <line x1="440" y1="218" x2="680" y2="218" stroke="#f0d5c8" stroke-width="1"/>
+    <text x="460" y="236" font-size="12" fill="#1a1a2e">description</text>
+    <text x="620" y="236" font-size="11" fill="#666">text</text>
+
+    <line x1="440" y1="244" x2="680" y2="244" stroke="#f0d5c8" stroke-width="1"/>
+    <text x="460" y="262" font-size="12" fill="#1a1a2e">start_time</text>
+    <text x="620" y="262" font-size="11" fill="#666">datetime</text>
+
+    <line x1="440" y1="270" x2="680" y2="270" stroke="#f0d5c8" stroke-width="1"/>
+    <text x="460" y="288" font-size="12" fill="#1a1a2e">end_time</text>
+    <text x="620" y="288" font-size="11" fill="#666">datetime</text>
+
+    <line x1="440" y1="296" x2="680" y2="296" stroke="#f0d5c8" stroke-width="1"/>
+    <text x="460" y="314" font-size="12" fill="#aaa">created_at</text>
+    <text x="620" y="314" font-size="11" fill="#aaa">datetime</text>
+
+    <line x1="440" y1="322" x2="680" y2="322" stroke="#f0d5c8" stroke-width="1"/>
+    <text x="460" y="340" font-size="12" fill="#aaa">updated_at</text>
+    <text x="620" y="340" font-size="11" fill="#aaa">datetime</text>
+
+    <line x1="440" y1="348" x2="680" y2="348" stroke="#f0d5c8" stroke-width="1"/>
+    <!-- event_type note -->
+    <text x="460" y="406" font-size="10" fill="#888" font-style="italic">event_type: phone_screen |</text>
+    <text x="460" y="418" font-size="10" fill="#888" font-style="italic">technical_screen | interview |</text>
+    <text x="460" y="430" font-size="10" fill="#888" font-style="italic">offer | rejection | other</text>
+  </g>
+
+  <!-- ===== Relationship line ===== -->
+  <!-- One end (companies) at x=300, y=151 (FK row midpoint) -->
+  <!-- Many end (calendar_events) at x=440, y=151 -->
+
+  <!-- Line -->
+  <line x1="300" y1="151" x2="440" y2="151" stroke="#555" stroke-width="2" stroke-dasharray="6,3"/>
+
+  <!-- "1" crow's foot — single vertical tick at companies side -->
+  <line x1="308" y1="143" x2="308" y2="159" stroke="#555" stroke-width="2"/>
+  <line x1="314" y1="143" x2="314" y2="159" stroke="#555" stroke-width="2"/>
+
+  <!-- "many" crow's foot at calendar_events side -->
+  <line x1="432" y1="143" x2="432" y2="159" stroke="#555" stroke-width="2"/>
+  <line x1="432" y1="151" x2="422" y2="143" stroke="#555" stroke-width="2"/>
+  <line x1="432" y1="151" x2="422" y2="159" stroke="#555" stroke-width="2"/>
+
+  <!-- Relationship label -->
+  <rect x="340" y="133" width="60" height="20" fill="#f8f9fa" rx="4"/>
+  <text x="370" y="147" text-anchor="middle" font-size="11" fill="#555">1 ──── 0..*</text>
+
+  <!-- Legend -->
+  <g transform="translate(60, 440)">
+    <rect x="0" y="0" width="620" height="28" fill="#eef2f7" rx="4"/>
+    <line x1="16" y1="14" x2="46" y2="14" stroke="#555" stroke-width="2" stroke-dasharray="6,3"/>
+    <text x="54" y="18" font-size="11" fill="#444">Foreign key relationship</text>
+    <text x="220" y="18" font-size="11" fill="#444">PK = Primary Key</text>
+    <text x="340" y="18" font-size="11" fill="#444">FK = Foreign Key (optional)</text>
+    <text x="510" y="18" font-size="11" fill="#888">nullify on delete</text>
+  </g>
+
+</svg>

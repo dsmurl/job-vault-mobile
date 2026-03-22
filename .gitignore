@@ -1,0 +1,75 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# JetBrains IDE
+# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839-How-to-manage-projects-under-Version-Control-Systems
+.idea/**/workspace.xml
+.idea/**/shelf/
+.idea/**/contentModel.xml
+.idea/**/dataSources/
+.idea/**/dataSources.local.xml
+.idea/**/httpRequests/
+.idea/**/sonarlint/
+.idea/**/vcs.xml
+
+# If this is a multi-root project, we want to share core configurations but ignore user-specific ones
+# .idea/modules.xml and *.iml files are usually shared for multi-root projects
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.env*
+!.env.example
+
+# Ignore local sqlite databases
+/db/*.sqlite3
+/db/*.sqlite3-journal
+/db/*.sqlite3-shm
+/db/*.sqlite3-wal
+
+# Ignore temporary files
+/tmp/*
+!/tmp/.keep
+/tmp/pids/*
+!/tmp/pids/.keep
+/tmp/storage/*
+!/tmp/storage/.keep
+**/tmp/cache/
+**/tmp/pids/
+**/tmp/storage/
+**/tmp/sockets/
+# Ignore log files
+/log/*.log
+**/log/*.log
+!/log/.keep
+!**/log/.keep
+# Expo
+**/.expo/
+**/dist/
+
+# Ignore key files for decrypting credentials and more.
+/config/*.key
+
+# Ignore storage files
+/storage/*
+!/storage/.keep
+**/storage/*.sqlite3
+**/storage/*.sqlite3-journal
+**/storage/*.sqlite3-shm
+**/storage/*.sqlite3-wal
+
+# Ignore public assets
+/public/assets
+
+
+# Vite Ruby
+/public/vite*
+node_modules
+# Vite uses dotenv and suggests to ignore local-only env files. See
+# https://vitejs.dev/guide/env-and-mode.html#env-files
+*.local
+
