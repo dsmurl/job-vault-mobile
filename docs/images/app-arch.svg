@@ -1,0 +1,96 @@
+<svg viewBox="0 0 600 450" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="100%" height="100%" rx="12" fill="#ffffff" filter="url(#dropShadow)"/>
+  <rect width="100%" height="100%" rx="12" fill="#fafafa"/>
+
+  <style>
+    .node { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 14px; }
+    .node-rect { stroke-width: 2; rx: 8; }
+    .edge { fill: none; stroke: #adb5bd; stroke-width: 2; }
+    .arrow { fill: #adb5bd; }
+    .label { font-weight: 600; text-anchor: middle; }
+    .sublabel { font-size: 11px; font-weight: 400; text-anchor: middle; }
+    
+    .ui { fill: #e3f2fd; stroke: #2196f3; }
+    .ui-text { fill: #0d47a1; }
+    .router { fill: #f3e5f5; stroke: #9c27b0; }
+    .router-text { fill: #4a148c; }
+    .screens { fill: #fff3e0; stroke: #ff9800; }
+    .screens-text { fill: #e65100; }
+    .components { fill: #f1f8e9; stroke: #8bc34a; }
+    .components-text { fill: #33691e; }
+    .db { fill: #e0f2f1; stroke: #009688; }
+    .db-text { fill: #004d40; }
+    .storage { fill: #efebe9; stroke: #795548; }
+    .storage-text { fill: #3e2723; }
+  </style>
+
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" class="arrow"/>
+    </marker>
+    <filter id="dropShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dx="1" dy="2" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.1"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- UI -->
+  <g class="node ui" transform="translate(200, 20)">
+    <rect class="node-rect" width="200" height="45"/>
+    <text x="100" y="28" class="label ui-text">React Native UI</text>
+  </g>
+  <!-- Router -->
+  <g class="node router" transform="translate(200, 95)">
+    <rect class="node-rect" width="200" height="45"/>
+    <text x="100" y="28" class="label router-text">Expo Router</text>
+  </g>
+  <!-- Screens -->
+  <g class="node screens" transform="translate(200, 170)">
+    <rect class="node-rect" width="200" height="45"/>
+    <text x="100" y="22" class="label screens-text">Screens</text>
+    <text x="100" y="37" class="sublabel screens-text">/app</text>
+  </g>
+  <!-- Components -->
+  <g class="node components" transform="translate(50, 245)">
+    <rect class="node-rect" width="200" height="45"/>
+    <text x="100" y="22" class="label components-text">Components</text>
+    <text x="100" y="37" class="sublabel components-text">/components</text>
+  </g>
+  <!-- DBClient -->
+  <g class="node db" transform="translate(350, 245)">
+    <rect class="node-rect" width="200" height="45"/>
+    <text x="100" y="22" class="label db-text">Database Client</text>
+    <text x="100" y="37" class="sublabel db-text">/utils/db.js</text>
+  </g>
+  <!-- SQLite -->
+  <g class="node db" transform="translate(350, 320)">
+    <rect class="node-rect" width="200" height="45"/>
+    <text x="100" y="28" class="label db-text">Expo SQLite</text>
+  </g>
+  <!-- FileSystem -->
+  <g class="node storage" transform="translate(350, 395)">
+    <rect class="node-rect" width="200" height="45"/>
+    <text x="100" y="28" class="label storage-text">Device Local Storage</text>
+  </g>
+
+  <!-- Edges -->
+  <path d="M 300 65 L 300 95" class="edge" marker-end="url(#arrowhead)"/>
+  <path d="M 300 140 L 300 170" class="edge" marker-end="url(#arrowhead)"/>
+
+  <!-- Screens to Components -->
+  <path d="M 300 215 L 300 230 L 150 230 L 150 245" class="edge" marker-end="url(#arrowhead)"/>
+
+  <!-- Screens to DBClient -->
+  <path d="M 300 215 L 300 230 L 450 230 L 450 245" class="edge" marker-end="url(#arrowhead)"/>
+
+  <path d="M 450 290 L 450 320" class="edge" marker-end="url(#arrowhead)"/>
+  <path d="M 450 365 L 450 395" class="edge" marker-end="url(#arrowhead)"/>
+</svg>

@@ -26,7 +26,7 @@ module.exports = {
     web: {
       favicon: "./assets/favicon.png",
     },
-    plugins: ["expo-router"],
+    plugins: ["expo-router", "expo-sqlite"],
     scheme: "job-vault",
     extra: {
       apiBaseUrl: process.env.API_BASE_URL || null,

@@ -24,7 +24,7 @@ import {
   localInputToUTC,
   utcToLocalInput,
 } from "../utils/time";
-import { X } from "lucide-react-native";
+import { X, ChevronDown } from "lucide-react-native";
 import { companiesApi, calendarEventsApi } from "../utils/db";
 import EventDetailItem, {
   eventTypeLabel,
@@ -73,7 +73,7 @@ export default function EventsScreen() {
                   ?.name || "All Companies"
               : "All Companies"}
           </Text>
-          <Text style={styles.headerFilterChevron}>▾</Text>
+          <ChevronDown size={14} color="#6b7280" style={{ marginLeft: 4 }} />
         </TouchableOpacity>
       ),
     });
@@ -398,7 +398,7 @@ export default function EventsScreen() {
                   {EVENT_TYPES.find((t) => t.value === form.event_type)
                     ?.label || "Select type"}
                 </Text>
-                <Text style={styles.filterDropdownChevron}>▾</Text>
+                <ChevronDown size={16} color="#6b7280" />
               </TouchableOpacity>
 
               <Text style={styles.formLabel}>Company (optional)</Text>
@@ -415,7 +415,7 @@ export default function EventsScreen() {
                         )?.name || "None"
                       : "None"}
                 </Text>
-                <Text style={styles.filterDropdownChevron}>▾</Text>
+                <ChevronDown size={16} color="#6b7280" />
               </TouchableOpacity>
               {showNewCompany && (
                 <TextInput

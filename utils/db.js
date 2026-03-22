@@ -75,8 +75,13 @@ export const companiesApi = {
     );
     return { id: result.lastInsertRowId, ...company };
   },
-  update: async (id, company) => {
+  update: async (id, companyUpdate) => {
     const database = await getDb();
+    const existing = await companiesApi.getById(id);
+    if (!existing) throw new Error(`Company with id ${id} not found`);
+
+    const company = { ...existing, ...companyUpdate };
+
     await database.runAsync(
       "UPDATE companies SET name = ?, url = ?, contact_name = ?, notes = ?, star_rating = ?, archived = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?",
       [
@@ -84,7 +89,7 @@ export const companiesApi = {
         company.url,
         company.contact_name,
         company.notes,
-        company.star_rating,
+        company.star_rating || 0,
         company.archived ? 1 : 0,
         id,
       ],
@@ -121,8 +126,20 @@ export const calendarEventsApi = {
     );
     return { id: result.lastInsertRowId, ...event };
   },
-  update: async (id, event) => {
+  getById: async (id) => {
     const database = await getDb();
+    return await database.getFirstAsync(
+      "SELECT * FROM calendar_events WHERE id = ?",
+      [id],
+    );
+  },
+  update: async (id, eventUpdate) => {
+    const database = await getDb();
+    const existing = await calendarEventsApi.getById(id);
+    if (!existing) throw new Error(`Calendar event with id ${id} not found`);
+
+    const event = { ...existing, ...eventUpdate };
+
     await database.runAsync(
       "UPDATE calendar_events SET company_id = ?, title = ?, description = ?, start_time = ?, end_time = ?, event_type = ?, selected_emoji = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?",
       [

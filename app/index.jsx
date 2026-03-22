@@ -216,7 +216,7 @@ export default function CompaniesScreen() {
               <StarRating
                 value={c.star_rating}
                 onChange={(r) => handleStarChange(c, r)}
-                disabled={c.archived}
+                disabled={!!c.archived}
               />
               <View style={styles.iconActions}>
                 <TouchableOpacity
@@ -325,7 +325,7 @@ const StarRating = ({ value, onChange, disabled = false }) => (
       <TouchableOpacity
         key={n}
         onPress={() => !disabled && onChange(n)}
-        disabled={disabled}
+        disabled={!!disabled}
       >
         <Star
           size={18}

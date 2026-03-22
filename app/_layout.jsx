@@ -118,12 +118,6 @@ export default function Layout() {
                 ),
               }}
             />
-            <Tabs.Screen
-              name="chat"
-              options={{
-                href: null,
-              }}
-            />
           </Tabs>
         </PaperProvider>
       </FilterContext.Provider>

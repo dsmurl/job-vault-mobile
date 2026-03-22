@@ -37,6 +37,7 @@ import {
 import {
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
   Plus,
   X,
   CalendarDays,
@@ -91,21 +92,26 @@ export default function CalendarScreen() {
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity
-          style={styles.headerFilter}
-          onPress={() => setFilterCompanyPickerVisible(true)}
-        >
-          <Text style={styles.headerFilterText}>
-            {selectedCompany
-              ? companies.find((c) => c.id.toString() === selectedCompany)
-                  ?.name || "All Companies"
-              : "All Companies"}
-          </Text>
-          <Text style={styles.headerFilterChevron}>▾</Text>
-        </TouchableOpacity>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <TouchableOpacity
+            style={styles.headerFilter}
+            onPress={() => setFilterCompanyPickerVisible(true)}
+          >
+            <Text style={styles.headerFilterText}>
+              {selectedCompany
+                ? companies.find((c) => c.id.toString() === selectedCompany)
+                    ?.name || "All Companies"
+                : "All Companies"}
+            </Text>
+            <ChevronDown size={14} color="#6b7280" style={{ marginLeft: 4 }} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.addBtn} onPress={openAddForm}>
+            <Plus size={18} color="#2563eb" />
+          </TouchableOpacity>
+        </View>
       ),
     });
-  }, [navigation, selectedCompany, companies]);
+  }, [navigation, selectedCompany, companies, openAddForm]);
 
   const fetchAll = async () => {
     try {
@@ -181,22 +187,24 @@ export default function CalendarScreen() {
     }
   }, [daySheetVisible]);
 
-  const openAddForm = () => {
+  const openAddForm = useCallback(() => {
     setEditingEvent(null);
     setShowNewCompany(false);
     setNewCompanyName("");
     setFormErrors({});
+    const baseDay = selectedDay || new Date();
     setForm({
       title: "",
       description: "",
-      start_time: format(selectedDay, "yyyy-MM-dd") + "T09:00",
+      start_time: format(baseDay, "yyyy-MM-dd") + "T09:00",
       end_time: "",
       event_type: "other",
-      company_id: "",
+      company_id: selectedCompany || "",
       selected_emoji: "",
     });
+    setDaySheetVisible(false);
     setFormDialogVisible(true);
-  };
+  }, [selectedDay, selectedCompany, daySheetVisible]);
 
   const openEditForm = (event) => {
     setEditingEvent(event);
@@ -212,6 +220,7 @@ export default function CalendarScreen() {
       company_id: event.company?.id?.toString() || "",
       selected_emoji: event.selected_emoji || "",
     });
+    setDaySheetVisible(false);
     setFormDialogVisible(true);
   };
 
@@ -249,6 +258,7 @@ export default function CalendarScreen() {
       } else {
         await calendarEventsApi.create(payload);
       }
+      setDaySheetVisible(false);
       setFormDialogVisible(false);
       setEditingEvent(null);
       await fetchAll();
@@ -411,62 +421,69 @@ export default function CalendarScreen() {
         </View>
       </ScrollView>
 
-      {/* Day Sheet (bottom sheet modal) */}
-      <Modal
-        visible={sheetModalMounted}
-        animationType="none"
-        transparent
-        onRequestClose={closeDaySheet}
-      >
-        <Animated.View
-          style={[styles.overlay, { opacity: sheetOverlayOpacity }]}
-          pointerEvents="auto"
-        >
-          <TouchableOpacity
-            style={StyleSheet.absoluteFill}
-            activeOpacity={1}
-            onPress={closeDaySheet}
-          />
-        </Animated.View>
-        <Animated.View
-          style={[
-            styles.bottomSheet,
-            { transform: [{ translateY: sheetTranslateY }] },
-          ]}
-        >
-          <View style={styles.sheetHandle} />
-          <View style={styles.sheetHeader}>
-            <Text style={styles.sheetTitle}>
-              {selectedDay ? format(selectedDay, "EEEE, MMMM d") : ""}
-            </Text>
-            <TouchableOpacity onPress={closeDaySheet}>
-              <X size={22} color="#6b7280" />
-            </TouchableOpacity>
-          </View>
+      {/* Day Sheet (bottom sheet) */}
+      {sheetModalMounted && (
+        <View style={StyleSheet.absoluteFill} pointerEvents="box-none">
+          <Animated.View
+            style={[styles.overlay, { opacity: sheetOverlayOpacity }]}
+            pointerEvents={daySheetVisible ? "auto" : "none"}
+          >
+            <TouchableOpacity
+              style={StyleSheet.absoluteFill}
+              activeOpacity={1}
+              onPress={closeDaySheet}
+            />
+          </Animated.View>
+          <Animated.View
+            style={[
+              styles.bottomSheet,
+              {
+                transform: [{ translateY: sheetTranslateY }],
+                position: "absolute",
+                left: 0,
+                right: 0,
+                bottom: 0,
+              },
+            ]}
+            pointerEvents={daySheetVisible ? "auto" : "none"}
+          >
+            <View style={styles.sheetHandle} />
+            <View style={styles.sheetHeader}>
+              <Text style={styles.sheetTitle}>
+                {selectedDay ? format(selectedDay, "EEEE, MMMM d") : ""}
+              </Text>
+              <TouchableOpacity onPress={closeDaySheet}>
+                <X size={22} color="#6b7280" />
+              </TouchableOpacity>
+            </View>
 
-          <ScrollView style={styles.sheetBody}>
-            {selectedDayEvents.length === 0 && (
-              <Text style={styles.empty}>No events on this day</Text>
-            )}
-            {selectedDayEvents.map((e) => (
-              <EventDetailItem
-                key={e.id}
-                event={e}
-                onEdit={openEditForm}
-                onDelete={handleDelete}
-                onView={setViewingEvent}
-              />
-            ))}
-          </ScrollView>
+            <ScrollView style={styles.sheetBody}>
+              {selectedDayEvents.length === 0 && (
+                <Text style={styles.empty}>No events on this day</Text>
+              )}
+              {selectedDayEvents.map((e) => (
+                <EventDetailItem
+                  key={e.id}
+                  event={e}
+                  onEdit={openEditForm}
+                  onDelete={handleDelete}
+                  onView={setViewingEvent}
+                />
+              ))}
+            </ScrollView>
 
-          <View style={styles.sheetFooter}>
-            <TouchableOpacity style={styles.sheetAddBtn} onPress={openAddForm}>
-              <Plus size={16} color="#fff" />
-              <Text style={styles.primaryBtnText}>Add Event</Text>
-            </TouchableOpacity>
-          </View>
-        </Animated.View>
-      </Modal>
+            <View style={styles.sheetFooter}>
+              <TouchableOpacity
+                style={styles.sheetAddBtn}
+                onPress={openAddForm}
+              >
+                <Plus size={16} color="#fff" />
+                <Text style={styles.primaryBtnText}>Add Event</Text>
+              </TouchableOpacity>
+            </View>
+          </Animated.View>
+        </View>
+      )}
 
       {/* View Event Description Modal */}
       <Modal
@@ -596,7 +613,7 @@ export default function CalendarScreen() {
                   {EVENT_TYPES.find((t) => t.value === form.event_type)
                     ?.label || "Select type"}
                 </Text>
-                <ChevronRight size={16} color="#6b7280" />
+                <ChevronDown size={16} color="#6b7280" />
               </TouchableOpacity>
 
               <Text style={styles.formLabel}>Company (optional)</Text>
@@ -613,7 +630,7 @@ export default function CalendarScreen() {
                         )?.name || "Select company"
                       : "None"}
                 </Text>
-                <ChevronRight size={16} color="#6b7280" />
+                <ChevronDown size={16} color="#6b7280" />
               </TouchableOpacity>
               {showNewCompany && (
                 <TextInput
@@ -739,7 +756,7 @@ export default function CalendarScreen() {
             style={[
               styles.pickerOption,
               selectedCompany === c.id.toString() && styles.pickerOptionActive,
-              c.archived && styles.pickerOptionArchived,
+              !!c.archived && styles.pickerOptionArchived,
             ]}
             onPress={() => {
               setSelectedCompany(c.id.toString());
@@ -751,7 +768,7 @@ export default function CalendarScreen() {
                 styles.pickerOptionText,
                 selectedCompany === c.id.toString() &&
                   styles.pickerOptionTextActive,
-                c.archived && styles.pickerOptionTextArchived,
+                !!c.archived && styles.pickerOptionTextArchived,
               ]}
             >
               {c.name}
@@ -819,7 +836,7 @@ export default function CalendarScreen() {
               form.company_id === c.id.toString() &&
                 !showNewCompany &&
                 styles.pickerOptionActive,
-              c.archived && styles.pickerOptionArchived,
+              !!c.archived && styles.pickerOptionArchived,
             ]}
             onPress={() => {
               setForm((f) => ({ ...f, company_id: c.id.toString() }));
@@ -834,7 +851,7 @@ export default function CalendarScreen() {
                 form.company_id === c.id.toString() &&
                   !showNewCompany &&
                   styles.pickerOptionTextActive,
-                c.archived && styles.pickerOptionTextArchived,
+                !!c.archived && styles.pickerOptionTextArchived,
               ]}
             >
               {c.name}
@@ -864,6 +881,10 @@ const styles = StyleSheet.create({
   },
   headerFilterText: { fontSize: 13, color: "#374151" },
   headerFilterChevron: { fontSize: 14, color: "#6b7280", marginLeft: 4 },
+  addBtn: {
+    padding: 8,
+    marginRight: 4,
+  },
   monthNav: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -934,6 +955,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     borderWidth: 0.5,
     borderColor: "#e2e8f0",
+    backgroundColor: "#fff",
   },
   selectedCell: {},
   dayNumWrapper: {
@@ -965,6 +987,11 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     maxHeight: SCREEN_HEIGHT * 0.85,
     paddingBottom: 30,
+    elevation: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 5,
   },
   sheetHandle: {
     width: 40,

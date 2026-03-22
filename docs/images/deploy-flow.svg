@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="250" viewBox="0 0 800 250">
+  <rect width="800" height="250" fill="#fcfcfc" />
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#888" />
+    </marker>
+    <style>
+      .label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: bold; }
+      .title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: bold; fill: #555; }
+      .subtext { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; fill: #777; }
+    </style>
+  </defs>
+
+  <!-- External System Blocks -->
+  <!-- Expo Block -->
+  <rect x="10" y="45" width="590" height="180" rx="15" ry="15" fill="#f0f4ff" stroke="#d0d7ff" stroke-width="2" stroke-dasharray="5,5" />
+  <text x="30" y="35" class="title">Expo / EAS Infrastructure</text>
+
+  <!-- Apple Block -->
+  <rect x="610" y="45" width="180" height="180" rx="15" ry="15" fill="#fff5f5" stroke="#ffdada" stroke-width="2" stroke-dasharray="5,5" />
+  <text x="630" y="35" class="title">Apple Ecosystem</text>
+
+  <!-- Step 1: Pastel Blue -->
+  <rect x="25" y="105" width="110" height="60" rx="10" ry="10" fill="#c3dafe" stroke="#a3bffa" stroke-width="2" />
+  <text x="80" y="135" text-anchor="middle" class="label" fill="#2d3748">Install &amp; Login</text>
+  <text x="80" y="155" text-anchor="middle" class="subtext" fill="#4a5568">(Local + Expo Account)</text>
+
+  <!-- Step 2: Pastel Cyan -->
+  <rect x="170" y="105" width="120" height="60" rx="10" ry="10" fill="#c4f1f9" stroke="#9decf9" stroke-width="2" />
+  <text x="230" y="140" text-anchor="middle" class="label" fill="#2c7a7b">EAS Configure</text>
+
+  <!-- Step 3: Pastel Green -->
+  <rect x="325" y="105" width="110" height="60" rx="10" ry="10" fill="#c6f6d5" stroke="#9ae6b4" stroke-width="2" />
+  <text x="380" y="140" text-anchor="middle" class="label" fill="#276749">Create Build</text>
+
+  <!-- Step 4: Pastel Yellow -->
+  <rect x="470" y="105" width="110" height="60" rx="10" ry="10" fill="#fefcbf" stroke="#faf089" stroke-width="2" />
+  <text x="525" y="140" text-anchor="middle" class="label" fill="#744210">Submit Build</text>
+
+  <!-- Step 5: Pastel Red/Pink (Apple) -->
+  <rect x="630" y="105" width="140" height="60" rx="10" ry="10" fill="#fed7d7" stroke="#feb2b2" stroke-width="2" />
+  <text x="700" y="135" text-anchor="middle" class="label" fill="#742a2a">App Store Connect</text>
+  <text x="700" y="155" text-anchor="middle" class="subtext" fill="#9b2c2c">(Final Approval)</text>
+
+  <!-- Arrows -->
+  <line x1="135" y1="135" x2="160" y2="135" stroke="#a0aec0" stroke-width="2" marker-end="url(#arrowhead)" />
+  <line x1="290" y1="135" x2="315" y2="135" stroke="#a0aec0" stroke-width="2" marker-end="url(#arrowhead)" />
+  <line x1="435" y1="135" x2="460" y2="135" stroke="#a0aec0" stroke-width="2" marker-end="url(#arrowhead)" />
+  <line x1="580" y1="135" x2="620" y2="135" stroke="#a0aec0" stroke-width="2" marker-end="url(#arrowhead)" />
+
+</svg>

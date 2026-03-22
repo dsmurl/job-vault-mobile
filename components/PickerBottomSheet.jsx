@@ -67,7 +67,7 @@ export default function PickerBottomSheet({
     >
       <Animated.View
         style={[styles.overlay, { opacity: overlayOpacity }]}
-        pointerEvents="auto"
+        pointerEvents={visible ? "auto" : "none"}
       >
         <TouchableOpacity
           style={StyleSheet.absoluteFill}
@@ -75,7 +75,10 @@ export default function PickerBottomSheet({
           onPress={onClose}
         />
       </Animated.View>
-      <Animated.View style={[styles.sheet, { transform: [{ translateY }] }]}>
+      <Animated.View
+        style={[styles.sheet, { transform: [{ translateY }] }]}
+        pointerEvents={visible ? "auto" : "none"}
+      >
         <View style={styles.header}>
           <Text style={styles.title}>{title}</Text>
           <TouchableOpacity onPress={onClose}>

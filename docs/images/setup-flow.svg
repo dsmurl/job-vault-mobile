@@ -1,0 +1,44 @@
+<svg width="600" height="200" viewBox="0 0 600 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="200" rx="12" fill="#ffffff" filter="url(#dropShadow)"/>
+
+  <!-- Background Layer -->
+  <rect width="600" height="200" rx="12" fill="#fafafa"/>
+
+  <!-- Step 1: Install -->
+  <rect x="40" y="50" width="150" height="100" rx="12" fill="#e3f2fd" stroke="#2196f3" stroke-width="2"/>
+  <text x="115" y="90" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#0d47a1" text-anchor="middle">1. Install</text>
+  <text x="115" y="115" font-family="Arial, sans-serif" font-size="13" fill="#1565c0" text-anchor="middle">pnpm install</text>
+
+  <!-- Arrow -->
+  <path d="M200 100 H220" stroke="#adb5bd" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- Step 2: Start -->
+  <rect x="230" y="50" width="140" height="100" rx="12" fill="#fff3e0" stroke="#ff9800" stroke-width="2"/>
+  <text x="300" y="90" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#e65100" text-anchor="middle">2. Start</text>
+  <text x="300" y="115" font-family="Arial, sans-serif" font-size="13" fill="#ef6c00" text-anchor="middle">pnpm expo start</text>
+
+  <!-- Arrow -->
+  <path d="M380 100 H400" stroke="#adb5bd" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- Step 3: Run -->
+  <rect x="410" y="50" width="150" height="100" rx="12" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
+  <text x="485" y="90" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1b5e20" text-anchor="middle">3. Run</text>
+  <text x="485" y="115" font-family="Arial, sans-serif" font-size="13" fill="#2e7d32" text-anchor="middle">iOS / Android / Web</text>
+
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#adb5bd"/>
+    </marker>
+    <filter id="dropShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dx="1" dy="2" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.1"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+</svg>

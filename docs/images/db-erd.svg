@@ -107,9 +107,9 @@
 
     <line x1="440" y1="348" x2="680" y2="348" stroke="#f0d5c8" stroke-width="1"/>
     <!-- event_type note -->
-    <text x="460" y="406" font-size="10" fill="#888" font-style="italic">event_type: phone_screen |</text>
-    <text x="460" y="418" font-size="10" fill="#888" font-style="italic">technical_screen | interview |</text>
-    <text x="460" y="430" font-size="10" fill="#888" font-style="italic">offer | rejection | other</text>
+    <text x="460" y="375" font-size="10" fill="#888" font-style="italic">event_type: phone_screen |</text>
+    <text x="460" y="387" font-size="10" fill="#888" font-style="italic">technical_screen | interview |</text>
+    <text x="460" y="399" font-size="10" fill="#888" font-style="italic">offer | rejection | other</text>
   </g>
 
   <!-- ===== Relationship line ===== -->
@@ -129,7 +129,6 @@
   <line x1="432" y1="151" x2="422" y2="159" stroke="#555" stroke-width="2"/>
 
   <!-- Relationship label -->
-  <rect x="340" y="133" width="60" height="20" fill="#f8f9fa" rx="4"/>
   <text x="370" y="147" text-anchor="middle" font-size="11" fill="#555">1 ──── 0..*</text>
 
   <!-- Legend -->
@@ -139,7 +138,7 @@
     <text x="54" y="18" font-size="11" fill="#444">Foreign key relationship</text>
     <text x="220" y="18" font-size="11" fill="#444">PK = Primary Key</text>
     <text x="340" y="18" font-size="11" fill="#444">FK = Foreign Key (optional)</text>
-    <text x="510" y="18" font-size="11" fill="#888">nullify on delete</text>
+    <text x="510" y="18" font-size="11" fill="#888">cascade delete</text>
   </g>
 
 </svg>

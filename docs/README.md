@@ -26,6 +26,15 @@
 - **Privacy First:** No data is sent to a server. Everything remains under your control.
 - **Simplified Tracking:** Direct entry and management of job search progress without needing an internet connection.
 
+## Project Documentation
+
+- [Database Schema and Migrations](database-schema.md)
+- [Viewing the App Database](viewing-app-database.md)
+- [Setup and Run Guide](setup-and-run.md)
+- [Architecture Overview](app-arch.md)
+- [Features and Functional Requirements](features.md)
+- [Deployment Information](deploy.md)
+
 ## Development Workflow
 
 - Start the development server with `pnpm expo start`.
