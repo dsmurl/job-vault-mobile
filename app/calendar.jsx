@@ -12,6 +12,8 @@ import {
   KeyboardAvoidingView,
   Platform,
   DeviceEventEmitter,
+  Keyboard,
+  InteractionManager,
 } from "react-native";
 import { Text, ActivityIndicator } from "react-native-paper";
 import {
@@ -60,6 +62,10 @@ export default function CalendarScreen() {
   const [selectedDay, setSelectedDay] = useState(null);
   const [daySheetVisible, setDaySheetVisible] = useState(false);
   const [sheetModalMounted, setSheetModalMounted] = useState(false);
+  const daySheetVisibleRef = useRef(daySheetVisible);
+  useEffect(() => {
+    daySheetVisibleRef.current = daySheetVisible;
+  }, [daySheetVisible]);
   const [editingEvent, setEditingEvent] = useState(null);
   const [form, setForm] = useState({
     title: "",
@@ -140,10 +146,12 @@ export default function CalendarScreen() {
   }, []);
 
   const handleDayPress = (day) => {
+    if (formDialogVisible || viewingEvent || saving) return;
     setSelectedDay(day);
     setEditingEvent(null);
     setSheetModalMounted(true);
     setDaySheetVisible(true);
+    daySheetVisibleRef.current = true;
   };
 
   const [formDialogVisible, setFormDialogVisible] = useState(false);
@@ -179,15 +187,18 @@ export default function CalendarScreen() {
           duration: 300,
           useNativeDriver: true,
         }),
-      ]).start(() => {
-        setSheetModalMounted(false);
-        sheetOverlayOpacity.setValue(0);
-        sheetTranslateY.setValue(600);
+      ]).start(({ finished }) => {
+        if (finished && !daySheetVisibleRef.current) {
+          setSheetModalMounted(false);
+          sheetOverlayOpacity.setValue(0);
+          sheetTranslateY.setValue(600);
+        }
       });
     }
   }, [daySheetVisible]);
 
   const openAddForm = useCallback(() => {
+    Keyboard.dismiss();
     setEditingEvent(null);
     setShowNewCompany(false);
     setNewCompanyName("");
@@ -203,10 +214,13 @@ export default function CalendarScreen() {
       selected_emoji: "",
     });
     setDaySheetVisible(false);
+    daySheetVisibleRef.current = false;
+    setSheetModalMounted(false);
     setFormDialogVisible(true);
-  }, [selectedDay, selectedCompany, daySheetVisible]);
+  }, [selectedDay, selectedCompany]);
 
   const openEditForm = (event) => {
+    Keyboard.dismiss();
     setEditingEvent(event);
     setShowNewCompany(false);
     setNewCompanyName("");
@@ -221,6 +235,8 @@ export default function CalendarScreen() {
       selected_emoji: event.selected_emoji || "",
     });
     setDaySheetVisible(false);
+    daySheetVisibleRef.current = false;
+    setSheetModalMounted(false);
     setFormDialogVisible(true);
   };
 
@@ -258,10 +274,14 @@ export default function CalendarScreen() {
       } else {
         await calendarEventsApi.create(payload);
       }
-      setDaySheetVisible(false);
       setFormDialogVisible(false);
+      setDaySheetVisible(false);
+      daySheetVisibleRef.current = false;
+      setSheetModalMounted(false);
       setEditingEvent(null);
-      await fetchAll();
+      InteractionManager.runAfterInteractions(() => {
+        fetchAll();
+      });
     } catch (e) {
       console.error(e);
     } finally {
@@ -423,7 +443,7 @@ export default function CalendarScreen() {
 
       {/* Day Sheet (bottom sheet) */}
       {sheetModalMounted && (
-        <View style={StyleSheet.absoluteFill} pointerEvents="box-none">
+        <View style={StyleSheet.absoluteFill} pointerEvents={daySheetVisible ? "auto" : "none"}>
           <Animated.View
             style={[styles.overlay, { opacity: sheetOverlayOpacity }]}
             pointerEvents={daySheetVisible ? "auto" : "none"}
