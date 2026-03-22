@@ -1,4 +1,4 @@
-import { parseISO, format } from 'date-fns';
+import { parseISO, format } from "date-fns";
 
 /**
  * Parse a UTC ISO string from the API into a local Date object for display.
@@ -20,7 +20,8 @@ export const parseEventTime = (isoStr) => parseISO(isoStr);
  * @param {string} localStr - datetime-local value, e.g. "2026-03-15T09:00"
  * @returns {string|null} UTC ISO string, e.g. "2026-03-15T14:00:00.000Z"
  */
-export const localInputToUTC = (localStr) => (localStr ? new Date(localStr).toISOString() : null);
+export const localInputToUTC = (localStr) =>
+  localStr ? new Date(localStr).toISOString() : null;
 
 /**
  * Convert a UTC ISO string from the API back to a datetime-local input value
@@ -32,4 +33,4 @@ export const localInputToUTC = (localStr) => (localStr ? new Date(localStr).toIS
  * @returns {string} datetime-local value in local time, e.g. "2026-03-15T09:00"
  */
 export const utcToLocalInput = (isoStr) =>
-  isoStr ? format(parseISO(isoStr), "yyyy-MM-dd'T'HH:mm") : '';
+  isoStr ? format(parseISO(isoStr), "yyyy-MM-dd'T'HH:mm") : "";

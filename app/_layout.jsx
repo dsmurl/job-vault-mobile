@@ -1,11 +1,17 @@
-import React, { createContext, useState, useContext, useEffect, useRef } from 'react';
-import { View, StyleSheet, Animated, Easing } from 'react-native';
-import { Tabs } from 'expo-router';
-import { Calendar, List, Briefcase } from 'lucide-react-native';
-import { PaperProvider } from 'react-native-paper';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import * as SplashScreen from 'expo-splash-screen';
-import { initDatabase } from '../utils/db';
+import React, {
+  createContext,
+  useState,
+  useContext,
+  useEffect,
+  useRef,
+} from "react";
+import { View, StyleSheet, Animated, Easing } from "react-native";
+import { Tabs } from "expo-router";
+import { Calendar, List, Briefcase } from "lucide-react-native";
+import { PaperProvider } from "react-native-paper";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import * as SplashScreen from "expo-splash-screen";
+import { initDatabase } from "../utils/db";
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -17,7 +23,7 @@ const FilterContext = createContext();
 export const useFilter = () => useContext(FilterContext);
 
 export default function Layout() {
-  const [selectedCompany, setSelectedCompany] = useState('');
+  const [selectedCompany, setSelectedCompany] = useState("");
   const [appIsReady, setAppIsReady] = useState(false);
   const spinValue = useRef(new Animated.Value(0)).current;
 
@@ -31,7 +37,7 @@ export default function Layout() {
             duration: 1500,
             easing: Easing.linear,
             useNativeDriver: true,
-          })
+          }),
         ).start();
 
         // Initialize SQLite database
@@ -53,7 +59,7 @@ export default function Layout() {
 
   const spin = spinValue.interpolate({
     inputRange: [0, 1],
-    outputRange: ['0deg', '360deg'],
+    outputRange: ["0deg", "360deg"],
   });
 
   if (!appIsReady) {
@@ -63,7 +69,9 @@ export default function Layout() {
           <View style={styles.diamondFrame}>
             <Briefcase size={120} color="#2563eb" />
           </View>
-          <Animated.View style={[styles.customSpinner, { transform: [{ rotate: spin }] }]} />
+          <Animated.View
+            style={[styles.customSpinner, { transform: [{ rotate: spin }] }]}
+          />
         </View>
       </View>
     );
@@ -73,18 +81,18 @@ export default function Layout() {
     <QueryClientProvider client={queryClient}>
       <FilterContext.Provider value={{ selectedCompany, setSelectedCompany }}>
         <PaperProvider>
-          <Tabs screenOptions={{ tabBarActiveTintColor: '#2563eb' }}>
+          <Tabs screenOptions={{ tabBarActiveTintColor: "#2563eb" }}>
             <Tabs.Screen
               name="index"
               options={{
-                title: 'Companies',
+                title: "Companies",
                 tabBarIcon: ({ color, size }) => (
                   <View
                     style={{
                       padding: 8,
-                      justifyContent: 'center',
-                      transform: [{ rotate: '45deg' }],
-                      alignItems: 'center',
+                      justifyContent: "center",
+                      transform: [{ rotate: "45deg" }],
+                      alignItems: "center",
                     }}
                   >
                     <Briefcase color={color} size={size} />
@@ -95,15 +103,19 @@ export default function Layout() {
             <Tabs.Screen
               name="calendar"
               options={{
-                title: 'Calendar',
-                tabBarIcon: ({ color, size }) => <Calendar color={color} size={size} />,
+                title: "Calendar",
+                tabBarIcon: ({ color, size }) => (
+                  <Calendar color={color} size={size} />
+                ),
               }}
             />
             <Tabs.Screen
               name="events"
               options={{
-                title: 'Events',
-                tabBarIcon: ({ color, size }) => <List color={color} size={size} />,
+                title: "Events",
+                tabBarIcon: ({ color, size }) => (
+                  <List color={color} size={size} />
+                ),
               }}
             />
             <Tabs.Screen
@@ -122,31 +134,31 @@ export default function Layout() {
 const styles = StyleSheet.create({
   loadingContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#ffffff',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#ffffff",
   },
   iconContainer: {
     width: 240,
     height: 240,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   diamondFrame: {
     padding: 40,
-    transform: [{ rotate: '45deg' }],
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
+    transform: [{ rotate: "45deg" }],
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
   },
   customSpinner: {
     width: 220,
     height: 220,
     borderRadius: 110,
     borderWidth: 8,
-    borderColor: 'transparent',
-    borderTopColor: '#2563eb',
-    borderRightColor: '#2563eb',
-    position: 'absolute',
+    borderColor: "transparent",
+    borderTopColor: "#2563eb",
+    borderRightColor: "#2563eb",
+    position: "absolute",
   },
 });

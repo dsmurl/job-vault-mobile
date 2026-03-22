@@ -6,8 +6,8 @@
     "dev": "expo start --clear",
     "ios": "expo start --ios",
     "android": "expo start --android",
-    "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "prettier": "prettier --write .",
+    "prettier:check": "prettier --check ."
   },
   "devDependencies": {
     "prettier": "^3.5.3",
