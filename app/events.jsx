@@ -26,11 +26,12 @@ import {
 } from "../utils/time";
 import { X, ChevronDown } from "lucide-react-native";
 import { companiesApi, calendarEventsApi } from "../utils/db";
-import EventDetailItem, {
+import {
+  EventDetailItem,
   eventTypeLabel,
   EVENT_TYPES,
-} from "../components/EventDetailItem";
-import PickerBottomSheet from "../components/PickerBottomSheet";
+} from "../components/EventDetailItem/EventDetailItem";
+import { PickerBottomSheet } from "../components/PickerBottomSheet/PickerBottomSheet";
 import { useFilter } from "./_layout";
 
 export default function EventsScreen() {

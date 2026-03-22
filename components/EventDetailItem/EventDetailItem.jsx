@@ -3,7 +3,7 @@ import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Text } from "react-native-paper";
 import { Pencil, Trash2, Eye } from "lucide-react-native";
 import { format } from "date-fns";
-import { parseEventTime } from "../utils/time";
+import { parseEventTime } from "../../utils/time";
 
 export const EVENT_TYPES = [
   { value: "applied", label: "Applied", color: "#f59e0b" },
@@ -33,7 +33,7 @@ export const eventTypeColor = (type, isArchived = false) => {
 export const eventTypeLabel = (type) =>
   EVENT_TYPES.find((t) => t.value === type)?.label || type;
 
-export default function EventDetailItem({ event, onEdit, onDelete, onView }) {
+export function EventDetailItem({ event, onEdit, onDelete, onView }) {
   const d = parseEventTime(event.start_time);
   const isArchived = event.company?.archived;
   return (

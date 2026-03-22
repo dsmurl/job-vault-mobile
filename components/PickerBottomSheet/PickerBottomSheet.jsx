@@ -13,12 +13,7 @@ import { X } from "lucide-react-native";
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
-export default function PickerBottomSheet({
-  visible,
-  onClose,
-  title,
-  children,
-}) {
+export function PickerBottomSheet({ visible, onClose, title, children }) {
   const [mounted, setMounted] = useState(false);
   const overlayOpacity = useRef(new Animated.Value(0)).current;
   const translateY = useRef(new Animated.Value(500)).current;

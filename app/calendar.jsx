@@ -45,13 +45,14 @@ import {
   CalendarDays,
 } from "lucide-react-native";
 import { companiesApi, calendarEventsApi } from "../utils/db";
-import EventDetailItem, {
+import {
+  EventDetailItem,
   eventTypeColor,
   eventTypeLabel,
   EVENT_TYPES,
   EMOJI_OPTIONS,
-} from "../components/EventDetailItem";
-import PickerBottomSheet from "../components/PickerBottomSheet";
+} from "../components/EventDetailItem/EventDetailItem";
+import { PickerBottomSheet } from "../components/PickerBottomSheet/PickerBottomSheet";
 import { useFilter } from "./_layout";
 
 export default function CalendarScreen() {
@@ -443,7 +444,10 @@ export default function CalendarScreen() {
 
       {/* Day Sheet (bottom sheet) */}
       {sheetModalMounted && (
-        <View style={StyleSheet.absoluteFill} pointerEvents={daySheetVisible ? "auto" : "none"}>
+        <View
+          style={StyleSheet.absoluteFill}
+          pointerEvents={daySheetVisible ? "auto" : "none"}
+        >
           <Animated.View
             style={[styles.overlay, { opacity: sheetOverlayOpacity }]}
             pointerEvents={daySheetVisible ? "auto" : "none"}
