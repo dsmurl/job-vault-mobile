@@ -1,7 +1,18 @@
 import React from "react";
 import { View, TouchableOpacity } from "react-native";
 import { Text } from "react-native-paper";
-import { Pencil, Trash2, Eye } from "lucide-react-native";
+import {
+  Pencil,
+  Trash2,
+  Eye,
+  Smile,
+  Frown,
+  Check,
+  Skull,
+  Star as StarIcon,
+  Flag,
+  Glasses,
+} from "lucide-react-native";
 import { format } from "date-fns";
 import { parseEventTime } from "../../utils/time";
 import { styles } from "./EventDetailItem.styles";
@@ -16,14 +27,14 @@ export const EVENT_TYPES = [
   { value: "other", label: "Other", color: "#6b7280" },
 ];
 
-export const EMOJI_OPTIONS = [
-  { label: "happy", emoji: "😊", color: "#16a34a" },
-  { label: "sad", emoji: "😢", color: "#dc2626" },
-  { label: "check mark", emoji: "✅", color: "#22c55e" },
-  { label: "eyes", emoji: "👀", color: "#3b82f6" },
-  { label: "skull", emoji: "💀", color: "#4b5563" },
-  { label: "star", emoji: "⭐", color: "#eab308" },
-  { label: "flag", emoji: "🚩", color: "#ef4444" },
+export const MARKER_OPTIONS = [
+  { label: "happy", color: "#16a34a", icon: Smile },
+  { label: "sad", color: "#dc2626", icon: Frown },
+  { label: "check mark", color: "#22c55e", icon: Check },
+  { label: "eyes", color: "#3b82f6", icon: Glasses },
+  { label: "skull", color: "#4b5563", icon: Skull },
+  { label: "star", color: "#eab308", icon: StarIcon },
+  { label: "flag", color: "#ef4444", icon: Flag },
 ];
 
 export const eventTypeColor = (type, isArchived = false) => {
@@ -51,12 +62,16 @@ export function EventDetailItem({ event, onEdit, onDelete, onView }) {
             {event.title}
           </Text>
           {!!event.selected_emoji && (
-            <Text style={styles.eventEmoji}>
-              {
-                EMOJI_OPTIONS.find((e) => e.label === event.selected_emoji)
-                  ?.emoji
-              }
-            </Text>
+            <View style={styles.eventEmoji}>
+              {(() => {
+                const option = MARKER_OPTIONS.find(
+                  (e) => e.label === event.selected_emoji,
+                );
+                if (!option) return null;
+                const IconComp = option.icon;
+                return <IconComp size={16} color={option.color || "#6b7280"} />;
+              })()}
+            </View>
           )}
         </View>
         <Text style={styles.eventMeta}>

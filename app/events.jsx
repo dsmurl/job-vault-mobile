@@ -12,7 +12,6 @@ import {
   Platform,
   DeviceEventEmitter,
 } from "react-native";
-import { Text, ActivityIndicator } from "react-native-paper";
 import {
   useFocusEffect,
   useNavigation,
@@ -30,9 +29,12 @@ import {
   EventDetailItem,
   eventTypeLabel,
   EVENT_TYPES,
+  MARKER_OPTIONS,
 } from "../components/EventDetailItem/EventDetailItem";
 import { PickerBottomSheet } from "../components/PickerBottomSheet/PickerBottomSheet";
 import { useFilter } from "./_layout";
+
+import { Text, ActivityIndicator } from "react-native-paper";
 
 export default function EventsScreen() {
   const [events, setEvents] = useState([]);
@@ -49,6 +51,7 @@ export default function EventsScreen() {
     end_time: "",
     event_type: "other",
     company_id: "",
+    selected_emoji: "",
   });
   const [saving, setSaving] = useState(false);
   const [viewingEvent, setViewingEvent] = useState(null);
@@ -125,6 +128,7 @@ export default function EventsScreen() {
       end_time: utcToLocalInput(event.end_time),
       event_type: event.event_type,
       company_id: event.company?.id?.toString() || "",
+      selected_emoji: event.selected_emoji || "",
     });
     setFormDialogVisible(true);
   };
@@ -311,7 +315,25 @@ export default function EventsScreen() {
         <View style={styles.dialogOverlay}>
           <View style={styles.dialog}>
             <View style={styles.dialogHeader}>
-              <Text style={styles.dialogTitle}>{viewingEvent?.title}</Text>
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 8 }}
+              >
+                <Text style={styles.dialogTitle}>{viewingEvent?.title}</Text>
+                {!!viewingEvent?.selected_emoji && (
+                  <View style={{ marginLeft: 8 }}>
+                    {(() => {
+                      const option = MARKER_OPTIONS.find(
+                        (e) => e.label === viewingEvent.selected_emoji,
+                      );
+                      if (!option) return null;
+                      const IconComp = option.icon;
+                      return (
+                        <IconComp size={20} color={option.color || "#6b7280"} />
+                      );
+                    })()}
+                  </View>
+                )}
+              </View>
               <TouchableOpacity onPress={() => setViewingEvent(null)}>
                 <X size={22} color="#6b7280" />
               </TouchableOpacity>
@@ -379,6 +401,47 @@ export default function EventsScreen() {
                     setFormErrors((e) => ({ ...e, title: false }));
                 }}
               />
+
+              <View style={styles.markerPickerContainer}>
+                {MARKER_OPTIONS.map((opt) => (
+                  <TouchableOpacity
+                    key={opt.label}
+                    style={[
+                      styles.markerBtn,
+                      form.selected_emoji === opt.label && {
+                        borderColor: opt.color,
+                        backgroundColor: "#fff",
+                        shadowColor: "#000",
+                        shadowOffset: { width: 0, height: 1 },
+                        shadowOpacity: 0.1,
+                        shadowRadius: 1,
+                        elevation: 1,
+                      },
+                    ]}
+                    onPress={() =>
+                      setForm((f) => ({
+                        ...f,
+                        selected_emoji:
+                          f.selected_emoji === opt.label ? "" : opt.label,
+                      }))
+                    }
+                  >
+                    {(() => {
+                      const IconComp = opt.icon;
+                      return (
+                        <IconComp
+                          size={24}
+                          color={
+                            form.selected_emoji === opt.label
+                              ? opt.color
+                              : "#6b7280"
+                          }
+                        />
+                      );
+                    })()}
+                  </TouchableOpacity>
+                ))}
+              </View>
 
               <Text style={styles.formLabel}>Event Type</Text>
               <TouchableOpacity
@@ -771,6 +834,25 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   primaryBtnText: { color: "#fff", fontWeight: "700", fontSize: 14 },
+  markerPickerContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: "#f9fafb",
+    borderRadius: 8,
+    padding: 6,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: "#e5e7eb",
+  },
+  markerBtn: {
+    padding: 6,
+    borderRadius: 6,
+    borderWidth: 2,
+    borderColor: "transparent",
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+  },
   eventViewMeta: {
     fontSize: 14,
     color: "#6b7280",

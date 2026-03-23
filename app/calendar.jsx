@@ -50,7 +50,7 @@ import {
   eventTypeColor,
   eventTypeLabel,
   EVENT_TYPES,
-  EMOJI_OPTIONS,
+  MARKER_OPTIONS,
 } from "../components/EventDetailItem/EventDetailItem";
 import { PickerBottomSheet } from "../components/PickerBottomSheet/PickerBottomSheet";
 import { useFilter } from "./_layout";
@@ -519,7 +519,25 @@ export default function CalendarScreen() {
         <View style={styles.dialogOverlay}>
           <View style={styles.dialog}>
             <View style={styles.dialogHeader}>
-              <Text style={styles.dialogTitle}>{viewingEvent?.title}</Text>
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 8 }}
+              >
+                <Text style={styles.dialogTitle}>{viewingEvent?.title}</Text>
+                {!!viewingEvent?.selected_emoji && (
+                  <View style={{ marginLeft: 8 }}>
+                    {(() => {
+                      const option = MARKER_OPTIONS.find(
+                        (e) => e.label === viewingEvent.selected_emoji,
+                      );
+                      if (!option) return null;
+                      const IconComp = option.icon;
+                      return (
+                        <IconComp size={20} color={option.color || "#6b7280"} />
+                      );
+                    })()}
+                  </View>
+                )}
+              </View>
               <TouchableOpacity onPress={() => setViewingEvent(null)}>
                 <X size={22} color="#6b7280" />
               </TouchableOpacity>
@@ -591,12 +609,12 @@ export default function CalendarScreen() {
                 }}
               />
 
-              <View style={styles.emojiPickerContainer}>
-                {EMOJI_OPTIONS.map((opt) => (
+              <View style={styles.markerPickerContainer}>
+                {MARKER_OPTIONS.map((opt) => (
                   <TouchableOpacity
                     key={opt.label}
                     style={[
-                      styles.emojiBtn,
+                      styles.markerBtn,
                       form.selected_emoji === opt.label && {
                         borderColor: opt.color,
                         backgroundColor: "#fff",
@@ -615,15 +633,19 @@ export default function CalendarScreen() {
                       }))
                     }
                   >
-                    <Text
-                      style={[
-                        styles.emojiText,
-                        form.selected_emoji !== opt.label &&
-                          styles.emojiTextInactive,
-                      ]}
-                    >
-                      {opt.emoji}
-                    </Text>
+                    {(() => {
+                      const IconComp = opt.icon;
+                      return (
+                        <IconComp
+                          size={24}
+                          color={
+                            form.selected_emoji === opt.label
+                              ? opt.color
+                              : "#6b7280"
+                          }
+                        />
+                      );
+                    })()}
                   </TouchableOpacity>
                 ))}
               </View>
@@ -1097,7 +1119,7 @@ const styles = StyleSheet.create({
     color: "#374151",
     marginBottom: 10,
   },
-  emojiPickerContainer: {
+  markerPickerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     backgroundColor: "#f9fafb",
@@ -1107,7 +1129,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#e5e7eb",
   },
-  emojiBtn: {
+  markerBtn: {
     padding: 6,
     borderRadius: 6,
     borderWidth: 2,
@@ -1115,12 +1137,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
-  },
-  emojiText: {
-    fontSize: 20,
-  },
-  emojiTextInactive: {
-    opacity: 0.4,
   },
   formLabel: { fontSize: 12, color: "#6b7280", marginBottom: 4 },
   input: {

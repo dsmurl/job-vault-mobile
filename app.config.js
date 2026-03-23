@@ -1,7 +1,7 @@
 module.exports = {
   expo: {
-    name: "Job Vault",
-    slug: "job-vault",
+    name: "Job Vault Mobile",
+    slug: "job-vault-mobile",
     version: "1.0.0",
     orientation: "portrait",
     icon: "./assets/icon.png",
@@ -26,8 +26,8 @@ module.exports = {
     web: {
       favicon: "./assets/favicon.png",
     },
-    plugins: ["expo-router", "expo-sqlite", "expo-font"],
-    scheme: "job-vault",
+    plugins: ["expo-router", "expo-sqlite"],
+    scheme: "job-vault-mobile",
     extra: {
       apiBaseUrl: process.env.API_BASE_URL || null,
     },
