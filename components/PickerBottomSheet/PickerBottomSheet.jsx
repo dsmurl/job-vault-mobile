@@ -1,17 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   Animated,
-  Dimensions,
   Modal,
   ScrollView,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
 import { X } from "lucide-react-native";
-
-const { height: SCREEN_HEIGHT } = Dimensions.get("window");
+import { styles } from "./PickerBottomSheet.styles";
 
 export function PickerBottomSheet({ visible, onClose, title, children }) {
   const [mounted, setMounted] = useState(false);
@@ -65,7 +62,7 @@ export function PickerBottomSheet({ visible, onClose, title, children }) {
         pointerEvents={visible ? "auto" : "none"}
       >
         <TouchableOpacity
-          style={StyleSheet.absoluteFill}
+          style={styles.absoluteFill}
           activeOpacity={1}
           onPress={onClose}
         />
@@ -85,36 +82,3 @@ export function PickerBottomSheet({ visible, onClose, title, children }) {
     </Modal>
   );
 }
-
-const styles = StyleSheet.create({
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(0,0,0,0.4)",
-  },
-  sheet: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: "#fff",
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-    maxHeight: SCREEN_HEIGHT * 0.5,
-    paddingBottom: 24,
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#e5e7eb",
-  },
-  title: {
-    flex: 1,
-    fontSize: 15,
-    fontWeight: "700",
-    color: "#111827",
-    marginRight: 12,
-  },
-});
